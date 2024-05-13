@@ -6,10 +6,10 @@ use App\Export\Base\RendererTrait;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\HttpFoundation\Response;
-use App\Export\ExportContext;
+use App\Pdf\PdfContext;
 use App\Project\ProjectStatisticService;
 use App\Utils\FileHelper;
-use App\Utils\HtmlToPdfConverter;
+use App\Pdf\HtmlToPdfConverter;
 use Twig\Environment;
 use PhpOffice\PhpWord\Shared\ZipArchive;
 
@@ -141,8 +141,8 @@ final class ZipRenderer implements RendererInterface
 
 	public function render(array $timesheets, TimesheetQuery $query): Response
     {
-        $context = new ExportContext();
-        $context->setOption('filename', 'kimai-export');
+        $context = new PdfContext();
+        $context->setOption('filename', 'etronet-baubericht');
 
 			
 		$projects = array();
@@ -199,7 +199,7 @@ final class ZipRenderer implements RendererInterface
 
         $filename = $context->getOption('filename');
         if (empty($filename)) {
-            $filename = 'kimai-export';
+            $filename = 'etronet-baubericht';
         }
 
         $filename = FileHelper::convertToAsciiFilename($filename);
